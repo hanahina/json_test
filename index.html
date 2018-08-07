@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>json-test</title>
+</head>
+
+<body>
+  <div id="create">
+    <input type="text" placeholder="name">
+    <a href="javascript:;">Create</a>
+  </div>
+  <div id="delete">
+    <input type="text" placeholder="id">
+    <a href="javascript:;">Delete</a>
+  </div>
+  <div id="update">
+    <input type="text" placeholder="id" name="id">
+    <input type="text" placeholder="name" name="name">
+    <a href="javascript:;">Update</a>
+  </div>
+  <hr>
+  <ul id="users"></ul>
+</body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script>
+  //Show data in unorder list
+  $.ajax({
+      url: 'http://localhost:3000/users',
+      method: 'get',
+      dataType: 'json',
+      data: {}
+    })
+    .done(function(res) {
+      // console.log(res);
+      $('#users').empty();
+      res.forEach(function(user) {
+        $('#users').prepend('<li><b>' + user.id + '：</b>    ' + user.name + '</li>');
+      });
+    })
+    .fail(function(err) {
+      console.log(err);
+    })
+
+  //Create a new data and show in the list
+  $('#create > a').on('click', function() {
+    let name = $('#create>input').val().trim();
+    if (!name) return false;
+    $.ajax({
+        url: 'http://localhost:3000/users',
+        method: 'post',
+        dataType: 'json',
+        data: {
+          name: name
+        }
+      }).done(function(res) {
+        console.log(res);
+        $('#users').prepend('<li><b>' + res.id + '：</b>    ' + res.name + '</li>');
+      })
+      .fail(function(err) {
+        console.log(err);
+      })
+    $('#create > input').val('');
+  })
+
+  //Delete a data
+  $('#delete > a').on('click', function() {
+    let id = $('#delete > input').val().trim();
+    if (!id) return false;
+    $.ajax({
+        url: 'http://localhost:3000/users',
+        method: 'get',
+        dataType: 'json',
+        data: {}
+      })
+      .done(function(indexArr) {
+        //console.log(indexArr);
+        let targetIndex = $.map(indexArr, function(item, index) {
+            return item.id
+          }).indexOf(Number(id))
+          //console.log(targetIndex);
+        if (targetIndex == -1) {
+          console.log('ID : ' + id + ' is not exist!!!');
+          return false;
+        }
+        $.ajax({
+            url: 'http://localhost:3000/users/' + id,
+            method: 'delete',
+            dataType: 'json'
+          }).done(function(res) {
+            $('#users > li').eq(-(targetIndex + 1)).remove();
+          })
+          .fail(function(err) {
+            console.log(err);
+          })
+      })
+      .fail(function(err) {
+        console.log(err);
+      });
+    $('#delete > input').val('');
+  })
+
+  //update data
+  $('#update > a').on('click', function() {
+    let id = $('#update > input[name=id]').val().trim();
+    let name = $('#update > input[name=name]').val().trim();
+    if (!id || !name) return false;
+    $.ajax({
+        url: 'http://localhost:3000/users/',
+        method: 'get',
+        dataType: 'json',
+        data: {}
+      })
+      .done(function(res) {
+        let indexArr = $.map(res, function(item, index) {
+            // console.log(item)
+            return item.id
+          }).indexOf(Number(id))
+          // console.log(indexArr)
+        if (indexArr == -1) {
+          console.log('ID : ' + id + ' is not exist!!!');
+          return false;
+        }
+        $.ajax({
+            url: 'http://localhost:3000/users/' + id,
+            method: 'put',
+            dataType: 'json',
+            data: {
+              name: name
+            }
+          })
+          .done(function(res) {
+            // console.log(res);
+            $('#users > li').eq(-(indexArr + 1)).replaceWith('<li><b>' + res.id + '：</b>    ' + res.name + '</li>');
+          })
+          .fail(function(err) {
+            console.log(err)
+          })
+      })
+      .fail(function(err) {
+        console.log(err)
+      })
+    $('#update > input').each(function() {
+      $(this).val('');
+    })
+  })
+</script>
+
+</html>
