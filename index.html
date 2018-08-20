@@ -29,7 +29,7 @@
 <script>
   //Show data in unorder list
   $.ajax({
-      url: 'data/data.json',
+      url: 'data/data.json/',
       method: 'get',
       dataType: 'json',
       data: {}
@@ -50,7 +50,7 @@
     let name = $('#create>input').val().trim();
     if (!name) return false;
     $.ajax({
-        url: 'data/data.json',
+        url: 'data/data.json/',
         method: 'post',
         dataType: 'json',
         data: {
@@ -71,7 +71,7 @@
     let id = $('#delete > input').val().trim();
     if (!id) return false;
     $.ajax({
-        url: 'data/data.json',
+        url: 'data/data.json/',
         method: 'get',
         dataType: 'json',
         data: {}
@@ -87,7 +87,7 @@
           return false;
         }
         $.ajax({
-            url: 'data/data.json' + id,
+            url: 'data/data.json/' + id,
             method: 'delete',
             dataType: 'json'
           }).done(function(res) {
@@ -109,7 +109,7 @@
     let name = $('#update > input[name=name]').val().trim();
     if (!id || !name) return false;
     $.ajax({
-        url: 'data/data.json',
+        url: 'data/data.json/',
         method: 'get',
         dataType: 'json',
         data: {}
@@ -125,7 +125,7 @@
           return false;
         }
         $.ajax({
-            url: 'data/data.json' + id,
+            url: 'data/data.json/' + id,
             method: 'put',
             dataType: 'json',
             data: {
