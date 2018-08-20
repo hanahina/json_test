@@ -29,7 +29,7 @@
 <script>
   //Show data in unorder list
   $.ajax({
-      url: 'data/data.json',
+      url: '/data/data.json',
       method: 'get',
       dataType: 'json',
       data: {}
@@ -87,7 +87,7 @@
           return false;
         }
         $.ajax({
-            url: 'data/data.json/' + id,
+            url: 'data/data.json' + id,
             method: 'delete',
             dataType: 'json'
           }).done(function(res) {
