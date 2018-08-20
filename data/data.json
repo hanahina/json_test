@@ -1,19 +1,36 @@
-{
-  "users": [{
-      "name": "AAA",
-      "id": 5
-    },
-    {
-      "name": "Tina",
-      "id": 6
-    },
-    {
-      "name": "Mary",
-      "id": 8
-    },
-    {
-      "name": "Lizzy",
-      "id": 11
-    }
-  ]
-}
+// {
+//   "users": [{
+//       "name": "AAA",
+//       "id": 5
+//     },
+//     {
+//       "name": "Tina",
+//       "id": 6
+//     },
+//     {
+//       "name": "Mary",
+//       "id": 8
+//     },
+//     {
+//       "name": "Lizzy",
+//       "id": 11
+//     }
+//   ]
+// }
+[{
+    "name": "AAA",
+    "id": 5
+  },
+  {
+    "name": "Tina",
+    "id": 6
+  },
+  {
+    "name": "Mary",
+    "id": 8
+  },
+  {
+    "name": "Lizzy",
+    "id": 11
+  }
+]
